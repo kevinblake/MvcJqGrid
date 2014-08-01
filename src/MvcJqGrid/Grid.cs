@@ -814,7 +814,7 @@ namespace MvcJqGrid
             return this;
         }
 
-        public Grid SetSubGridUrl(bool subGridUrl)
+        public Grid SetSubGridUrl(string subGridUrl)
         {
             _subGridUrl = subGridUrl;
             return this;
