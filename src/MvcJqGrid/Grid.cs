@@ -86,6 +86,9 @@ namespace MvcJqGrid
         private string _sortName;
         private bool? _sortOnHeaderClick;
         private SortOrder? _sortOrder;
+        private bool? _subGrid;
+        private string _subGridModel;
+        private string _subGridUrl;
         private bool? _toolbar;
         private ToolbarPosition _toolbarPosition = ToolbarPosition.Top;
         private bool? _topPager;
@@ -794,6 +797,30 @@ namespace MvcJqGrid
         }
 
         /// <summary>
+        /// If set to true this enables using a subgrid. If the subGrid is enabled a additional column
+        /// at left side is added to the basic grid. This column contains a 'plus' image which indicate
+        /// that the user can click on it to expand the row. By default all rows are collapsed.	
+        /// </summary>
+        /// <param name="subGrid"></param>
+        public Grid SetSubGrid(bool subGrid)
+        {
+            _subGrid = subGrid;
+            return this;
+        }
+
+        public Grid SetSubGridModel(string subGridModel)
+        {
+            _subGridModel = subGridModel;
+            return this;
+        }
+
+        public Grid SetSubGridUrl(bool subGridUrl)
+        {
+            _subGridUrl = subGridUrl;
+            return this;
+        }
+
+        /// <summary>
         ///     The initial sorting order when we use datatypes xml or json (data returned from server).
         ///     This parameter is added to the url. Two possible values - asc or desc. (default: asc)
         /// </summary>
@@ -1390,6 +1417,18 @@ namespace MvcJqGrid
 
             // Sortorder
             if (_sortOrder.HasValue) script.AppendFormat("sortorder:'{0}',", _sortOrder.ToString().ToLower()).AppendLine();
+
+            // sub grid
+            if (_subGrid.HasValue)
+                script.AppendFormat("subGrid:{0},", _subGrid.ToString().ToLower()).AppendLine();
+
+            // sub grid model
+            if (!_subGridModel.IsNullOrWhiteSpace())
+                script.AppendFormat("subGridModel: '{0}',", _subGridModel).AppendLine();
+
+            // sub grid url
+            if (!_subGridUrl.IsNullOrWhiteSpace())
+                script.AppendFormat("subGridUrl: '{0}',", _subGridUrl).AppendLine();
 
             // Toolbar
             if (_toolbar.HasValue)
